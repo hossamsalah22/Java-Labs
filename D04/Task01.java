@@ -17,7 +17,6 @@ class exceptions {
 }
 
 public class Task01 {
-    // Calling Function
     public static void example(int n1, int n2) {
         exceptions newException = new exceptions();
         try {
@@ -26,7 +25,7 @@ public class Task01 {
         } catch (customException e) {
             System.out.println(e.getMessage());
         } finally {
-            System.out.println("Finally");
+            System.out.println("From Finally");
         }
 
     }
