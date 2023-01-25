@@ -16,7 +16,7 @@ class Task01 {
             System.out.println("You Must Provide a Temprature to convert");
         } else {
             Function<Double, Double> convertToFahrenheit = new ConvertToFahrenheit();
-            Double fehr = TempConvert(Integer.parseInt(args[0]), convertToFahrenheit);
+            Double fehr = TempConvert(Double.parseDouble(args[0]), convertToFahrenheit);
             System.out.println("Temp " + args[0] + "C = " + fehr + "F");
         }
     }
