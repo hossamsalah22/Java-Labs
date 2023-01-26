@@ -17,5 +17,4 @@ public class Exercise1 {
             .collect(Collectors.toList());
       highPopulatedCity.forEach(System.out::println);
    }
-
 }

@@ -1,8 +1,6 @@
 
 import java.util.Objects;
 import java.util.Optional;
-
-import static java.lang.System.out;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.maxBy;
 
@@ -18,7 +16,6 @@ public class Exercise5 {
                 .map(cityDao::findCityById)
                 .filter(Objects::nonNull)
                 .collect(maxBy(comparing(City::getPopulation)));
-        capital.ifPresent(out::println);
+        capital.ifPresent(System.out::println);
     }
-
 }
