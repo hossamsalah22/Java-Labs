@@ -8,7 +8,14 @@ public class Exercise1 {
 
    public static void main(String[] args) {
       CountryDao countryDao = InMemoryWorldDao.getInstance();
-      // write your answer here
+      // Write your code here
+      List<City> highPopulatedCity = countryDao.findAllCountries()
+            .stream()
+            .map(country -> country.getCities().stream().max(Comparator.comparing(City::getPopulation)))
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .collect(Collectors.toList());
+      highPopulatedCity.forEach(System.out::println);
    }
 
 }

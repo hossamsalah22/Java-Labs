@@ -1,7 +1,4 @@
 
-
-
-
 import java.util.Objects;
 import java.util.Optional;
 
@@ -14,7 +11,14 @@ public class Exercise5 {
     public static void main(String[] args) {
         CountryDao countryDao = InMemoryWorldDao.getInstance();
         CityDao cityDao = InMemoryWorldDao.getInstance();
-       //write your answer here 
+        // write your answer here
+        Optional<City> capital = countryDao.findAllCountries()
+                .stream()
+                .map(Country::getCapital)
+                .map(cityDao::findCityById)
+                .filter(Objects::nonNull)
+                .collect(maxBy(comparing(City::getPopulation)));
+        capital.ifPresent(out::println);
     }
 
 }
