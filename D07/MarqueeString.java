@@ -12,6 +12,7 @@ public class MarqueeString extends JFrame implements Runnable {
 
     public MarqueeString() {
         this.setTitle("Marguee String");
+        this.setLayout(null);
         textLabel.setBounds(x, y, 100, 100);
         this.add(textLabel);
         th = new Thread(this);
