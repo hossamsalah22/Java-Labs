@@ -7,6 +7,7 @@ package databaseapp;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,14 +31,20 @@ public class DataBaseApp {
         try {
             // TODO code application logic here
             Class.forName("com.mysql.cj.jdbc.Driver");
-            
             try (Connection connection = DriverManager.getConnection(url, username, password)) {
                 Statement statement = connection.createStatement();
-                String addUser = "INSERT INTO users VALUES (8, 'John', 'jhon@gmail.com', current_timestamp(), current_timestamp())";
+//              Add User
+                String addUser = "INSERT INTO users (id, name, email, age, created_at, updated_at) VALUES (35, 'Hossam', 'Hossam@gmail.com', 26, current_timestamp(), current_timestamp())";
                 statement.executeUpdate(addUser);
-                ResultSet resultSet = statement.executeQuery("select id, name, email from users");
+//              Update User
+                String updateUser = "UPDATE users SET name = 'Mohsen', email = 'ali@gmail.com' where id = 6";
+                statement.executeUpdate(updateUser);
+//              Delete User
+                String deleteUser = "DELETE FROM users WHERE id = 7";
+                statement.executeUpdate(deleteUser);
+                ResultSet resultSet = statement.executeQuery("select id, name, email, age from users");
                 while(resultSet.next()) {
-                    System.out.println(resultSet.getInt(1) + ":" + resultSet.getString(2) + ":" + resultSet.getString(3));
+                    System.out.println(resultSet.getInt(1) + ":" + resultSet.getString(2) + ":" + resultSet.getString(3) + ":" + resultSet.getInt(4));
                 }
             }
         } catch (ClassNotFoundException ex) {
