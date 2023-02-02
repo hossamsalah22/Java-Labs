@@ -1,13 +1,5 @@
 package guiapplication;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
@@ -15,8 +7,6 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javax.sql.DataSource;
 
 public class MainDocumentBase extends Pane {
 
@@ -39,7 +29,6 @@ public class MainDocumentBase extends Pane {
     protected final Button prevBtn;
     protected final Button nextBtn;
     protected final Button lastBtn;
-    protected final Button clearBtn;
     protected final ToolBar toolBar;
     protected final Text text5;
     protected final Separator separator;
@@ -52,7 +41,7 @@ public class MainDocumentBase extends Pane {
 
     public MainDocumentBase() {
 
-         id = new Text();
+        id = new Text();
         idField = new TextField();
         first_name = new Text();
         firstNameField = new TextField();
@@ -71,7 +60,6 @@ public class MainDocumentBase extends Pane {
         prevBtn = new Button();
         nextBtn = new Button();
         lastBtn = new Button();
-        clearBtn = new Button();
         toolBar = new ToolBar();
         text5 = new Text();
         separator = new Separator();
@@ -95,6 +83,7 @@ public class MainDocumentBase extends Pane {
         id.setText("ID");
         id.setFont(new Font("System Bold", 14.0));
 
+        idField.setDisable(true);
         idField.setAlignment(javafx.geometry.Pos.BOTTOM_LEFT);
         idField.setLayoutX(164.0);
         idField.setLayoutY(65.0);
@@ -161,22 +150,6 @@ public class MainDocumentBase extends Pane {
         phoneField.setPrefHeight(26.0);
         phoneField.setPrefWidth(196.0);
 
-        clearBtn.setLayoutX(30.0);
-        clearBtn.setLayoutY(354.0);
-        clearBtn.setMinHeight(10.0);
-        clearBtn.setMnemonicParsing(false);
-        clearBtn.setPrefHeight(33.0);
-        clearBtn.setPrefWidth(58.0);
-        clearBtn.setText("Clear");
-        clearBtn.setOnAction((ActionEvent event) -> {
-        if((idField.getText()).isEmpty()){
-                Alert alert = new Alert(AlertType.INFORMATION, "Nothing to Clear!");
-                alert.show();
-        }
-        else{
-              EmpData(0);
-        }
-        });
         // add new emp
         newBtn.setLayoutX(100.0);
         newBtn.setLayoutY(354.0);
@@ -185,17 +158,7 @@ public class MainDocumentBase extends Pane {
         newBtn.setPrefHeight(33.0);
         newBtn.setPrefWidth(58.0);
         newBtn.setText("New");
-        newBtn.setOnAction((ActionEvent event) -> {
-            if((idField.getText()).isEmpty()){
-                Alert alert = new Alert(AlertType.INFORMATION, "There is No Data Submitted \n Please Enter Your Data");
-                alert.show();
-            }
-            else{
-                EmpData(1);
-                Alert alert = new Alert(AlertType.INFORMATION, "Data Submitted Successfully");
-                alert.show();
-            }
-        });
+
         // update emp Data
         updateBtn.setLayoutX(170.0);
         updateBtn.setLayoutY(354.0);
@@ -204,15 +167,6 @@ public class MainDocumentBase extends Pane {
         updateBtn.setPrefHeight(33.0);
         updateBtn.setPrefWidth(58.0);
         updateBtn.setText("Update");
-        updateBtn.setOnAction((ActionEvent event) -> {
-            if((idField.getText()).isEmpty()){
-                Alert alert = new Alert(AlertType.INFORMATION, "There is No Data Entered");
-                alert.show();
-            }
-            else{
-              EmpData(2);
-            }
-        });
 
         deleteBtn.setLayoutX(240.0);
         deleteBtn.setLayoutY(354.0);
@@ -221,10 +175,8 @@ public class MainDocumentBase extends Pane {
         deleteBtn.setPrefHeight(33.0);
         deleteBtn.setPrefWidth(58.0);
         deleteBtn.setText("Delete");
-        deleteBtn.setOnAction((ActionEvent event) -> {
-            EmpData(3);
-        });
-//        Get First Record
+
+        // Get First Record
         firstBtn.setLayoutX(310.0);
         firstBtn.setLayoutY(354.0);
         firstBtn.setMinHeight(10.0);
@@ -232,10 +184,8 @@ public class MainDocumentBase extends Pane {
         firstBtn.setPrefHeight(33.0);
         firstBtn.setPrefWidth(58.0);
         firstBtn.setText("First");
-        firstBtn.setOnAction((ActionEvent event) -> {
-            EmpData(4);
-        });
-//      Get Previous 
+
+        // Get Previous
         prevBtn.setLayoutX(380.0);
         prevBtn.setLayoutY(354.0);
         prevBtn.setMinHeight(10.0);
@@ -243,10 +193,8 @@ public class MainDocumentBase extends Pane {
         prevBtn.setPrefHeight(33.0);
         prevBtn.setPrefWidth(58.0);
         prevBtn.setText("Previous");
-        prevBtn.setOnAction((ActionEvent event) -> {
-            EmpData(5);
-        });
-//      Get Next Record
+
+        // Get Next Record
         nextBtn.setLayoutX(450.0);
         nextBtn.setLayoutY(354.0);
         nextBtn.setMinHeight(10.0);
@@ -254,10 +202,8 @@ public class MainDocumentBase extends Pane {
         nextBtn.setPrefHeight(33.0);
         nextBtn.setPrefWidth(58.0);
         nextBtn.setText("Next");
-        nextBtn.setOnAction((ActionEvent event) -> {
-            EmpData(6);
-        });
-//        Get LAst Emp
+
+        // Get LAst Emp
         lastBtn.setLayoutX(520.0);
         lastBtn.setLayoutY(354.0);
         lastBtn.setMinHeight(10.0);
@@ -265,9 +211,6 @@ public class MainDocumentBase extends Pane {
         lastBtn.setPrefHeight(33.0);
         lastBtn.setPrefWidth(58.0);
         lastBtn.setText("Last");
-        lastBtn.setOnAction((ActionEvent event) -> {
-            EmpData(7);
-        });
 
         toolBar.setLayoutX(-5.0);
         toolBar.setLayoutY(-6.0);
@@ -337,7 +280,6 @@ public class MainDocumentBase extends Pane {
         getChildren().add(prevBtn);
         getChildren().add(nextBtn);
         getChildren().add(lastBtn);
-        getChildren().add(clearBtn);
         toolBar.getItems().add(text5);
         getChildren().add(toolBar);
         getChildren().add(separator);
@@ -348,140 +290,4 @@ public class MainDocumentBase extends Pane {
         getChildren().add(text6);
 
     }
-    
-    public  void EmpData(int flag)
-    {
-       DataSource ds =  MyDataSourceFactory.getMySQLDataSource();
-       Connection con = null;
-       Statement state = null;
-       ResultSet rs = null;
-       int lastIndex = 0;
-
-       try{ 
-               con = ds.getConnection();
-               state = (Statement) con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-               rs = state.executeQuery("SELECT id, first_name, middle_name, last_name, email, phone FROM emps");
-
-                while (rs.next()) {
-                    lastIndex++;
-                }
-               rs.beforeFirst();
-              try {
-                       
-               switch(flag)
-               {
-                   case 0:    //Clear
-                   {
-                       
-                        idField.clear();
-                        firstNameField.clear();
-                        middleNameField.clear();
-                        lastNameField.clear();
-                        emailField.clear();
-                        phoneField.clear();
-//                        String foundType = rs.getString(1);
-                        System.out.println("You are now in: " + rs.getRow());
-//                        System.out.println(foundType);
-//                        row++;
-
-                       break;
-                   }
-                   case 1:    //New
-                   {
-                        lastIndex++;
-                        rs.absolute(lastIndex);
-                        rs.moveToInsertRow(); 
-                        PreparedStatement pstate = con.prepareStatement("INSERT INTO emps (id, first_name, middle_name, last_name, email, phone) VALUES(?,?,?,?,?,?)");
-                        pstate.setInt(1,Integer.parseInt(idField.getText()));
-                        pstate.setString(2, firstNameField.getText());
-                        pstate.setString(3, middleNameField.getText());
-                        pstate.setString(4, lastNameField.getText());
-                        pstate.setString(5, emailField.getText());
-                        pstate.setString(6, phoneField.getText());
-                        pstate.executeUpdate();
-    
-                       break;
-                   }
-                   case 2:    //Update
-                   {
-                        rs.absolute(row);
-                        rs.updateString(1, idField.getText());
-                        rs.updateString(2, firstNameField.getText());
-                        rs.updateString(3, middleNameField.getText());
-                        rs.updateString(4, lastNameField.getText());
-                        rs.updateString(5, emailField.getText());
-                        rs.updateString(6, phoneField.getText());
-                        rs.updateRow();    
-                       break;
-                   } 
-                   case 3:    //Delete
-                   {
-                        rs.absolute(row);
-                        rs.deleteRow();
-                        row--;    
-                        rs.absolute(row);
-                       break;
-                   } 
-                   case 4:    //First
-                   {
-                       rs.first();
-                       row = 1;
-                   
-                       break;
-                   } 
-                   case 5:    //Previous
-                   {
-                        row--;
-                        if (row < 1) {
-                            row = lastIndex;
-                        }
-                        rs.absolute(row);  
-                       break;
-                   } 
-                   case 6:    //Next
-                   {
-                        row++;
-                        if (row > lastIndex) {
-                            row = 1;
-                        }
-                        rs.absolute(row);     
-                       break;
-                   } 
-                   case 7:    //Last
-                   {
-                       rs.last();
-                       row = lastIndex;
-                       break;
-                   } 
-               }
-               
-               if(flag != 1)
-                {
-                    idField.setText(Integer.toString(rs.getInt(1)));
-                    firstNameField.setText(rs.getString(2));
-                    middleNameField.setText(rs.getString(3));
-                    lastNameField.setText(rs.getString(4));
-                    emailField.setText(rs.getString(5));
-                    phoneField.setText(rs.getString(6));
-                    state.close();
-                    con.close();
-                }
-             } catch (Exception e) {
-                 e.printStackTrace();
-           }
-
-      } catch (SQLException ex) {
-            ex.printStackTrace();
-        }finally{
-           try{
-               if(rs != null)  rs.close();
-               if(state != null)  state.close();
-               if(con != null)  con.close();
-           }catch (SQLException ex) {
-               System.out.println("Error!!");
-               ex.printStackTrace();
-        }
-       }
-    }
-    
 }
